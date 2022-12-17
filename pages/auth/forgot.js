@@ -1,5 +1,7 @@
+// Components
 import AuthHeader from "../../components/AuthHeader";
 import ForgotPassword from "../../components/ForgotPassword";
+
 
 const Forgot = () => {
     return (

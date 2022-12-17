@@ -1,20 +1,14 @@
-import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import Account from '../components/Account'
+// Components
+import Account from '../components/Account';
+import withAuth from '../wrappers/withAuth';
+
 
 const Home = () => {
-  const session = useSession()
-  const supabase = useSupabaseClient()
-
   return (
     <div className="">
-      {!session ? (
-        <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />
-      ) : (
-          <Account session={session} />
-      )}
+      <Account />
     </div>
   )
 }
 
-export default Home
+export default withAuth(Home)

@@ -1,6 +1,10 @@
+// React and NextJS
+import Link from "next/link";
+
+// Components
 import AuthHeader from "../../components/AuthHeader";
 import Login from "../../components/Login";
-import Link from "next/link";
+
 
 const LoginPage = () => {
     return(

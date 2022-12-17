@@ -1,5 +1,7 @@
+// Components
 import AuthHeader from "../../components/AuthHeader";
 import SignUp from "../../components/SignUp";
+
 
 const SignupPage = () => {
     return(

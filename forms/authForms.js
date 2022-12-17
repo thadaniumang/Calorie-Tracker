@@ -23,16 +23,6 @@ const loginFields = [
 
 const signupFields = [
     {
-        labelText: "Username",
-        labelFor: "username",
-        id: "username",
-        name: "username",
-        type: "text",
-        autoComplete: "username",
-        isRequired: true,
-        placeholder: "Username"   
-    },
-    {
         labelText: "Email address",
         labelFor: "email-address",
         id: "email-address",
@@ -41,16 +31,6 @@ const signupFields = [
         autoComplete: "email",
         isRequired: true,
         placeholder: "Email address"   
-    },
-    {
-        labelText: "Full Name",
-        labelFor: "full-name",
-        id: "full-name",
-        name: "fullname",
-        type: "text",
-        autoComplete: "name",
-        isRequired: true,
-        placeholder: "Full Name"   
     },
     {
         labelText: "Password",

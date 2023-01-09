@@ -7,7 +7,7 @@ const loginFields = [
         type: "email",
         autoComplete: "email",
         isRequired: true,
-        placeholder: "Email address"   
+        placeholder: "Email address",
     },
     {
         labelText: "Password",
@@ -17,7 +17,7 @@ const loginFields = [
         type: "password",
         autoComplete: "current-password",
         isRequired: true,
-        placeholder: "Password"   
+        placeholder: "Password",
     }
 ]
 
@@ -30,7 +30,9 @@ const signupFields = [
         type: "email",
         autoComplete: "email",
         isRequired: true,
-        placeholder: "Email address"   
+        placeholder: "Email address",
+        error: "Invalid email address",
+        hasError: false
     },
     {
         labelText: "Password",
@@ -40,7 +42,9 @@ const signupFields = [
         type: "password",
         autoComplete: "current-password",
         isRequired: true,
-        placeholder: "Password"   
+        placeholder: "Password",
+        error: "Password must contain atleast 8 characters, with 1 uppercase, 1 lowercase, 1 number and 1 special character",
+        hasError: false
     },
     {
         labelText: "Confirm Password",
@@ -50,7 +54,9 @@ const signupFields = [
         type: "password",
         autoComplete: "confirm-password",
         isRequired: true,
-        placeholder: "Confirm Password"   
+        placeholder: "Confirm Password",
+        error: "Passwords do not match",
+        hasError: false
     }
 ]
 

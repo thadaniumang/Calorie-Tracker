@@ -1,13 +1,9 @@
 // React and NextJS
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // Forms
 import { signupFields } from "../forms/authForms";
-
-// Recoil
-import { useRecoilState } from "recoil";
-import { loggedInState, userState } from "../atoms";
 
 // Supabase
 import supabase from "../supabase";
@@ -15,7 +11,7 @@ import supabase from "../supabase";
 // Components
 import FormAction from "./FormAction";
 import Input from "./Input";
-
+import ToastAlert from "./ToastAlert";
 
 // Form Fields
 const fields = signupFields;
@@ -24,19 +20,50 @@ fields.forEach(field => fieldsState[field.id] = '');
 
 
 const SignUp = () => {
-    const [loggedIn, setLoggedIn] = useRecoilState(loggedInState);
-    const [user, setUser] = useRecoilState(userState);
+    const [submitted, setSubmitted] = useState(false);
+    const [errorFound, setErrorFound] = useState(false);
+
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
     const router = useRouter();
 
-    if (loggedIn && user) {
-        router.push('/');
-    }
+    useEffect(() => {
+        supabase.auth.getUser().then((res) => {
+            if (res.data.user) {
+                router.push('/');
+            } else {
+                return res.error;
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
 
     const [signupState, setSignupState] = useState(fieldsState);
 
     const handleChange = (e) => {
         setSignupState({ ...signupState, [e.target.id]: e.target.value })
+
+        if (e.target.id === 'email-address') {
+            if (!emailRegex.test(e.target.value)) {
+                fields[0]['hasError'] = true;
+            } else {
+                fields[0]['hasError'] = false;
+            }
+        } else if (e.target.id === 'password') {
+            if (!passwordRegex.test(e.target.value)) {
+                fields[1]['hasError'] = true;
+            } else {
+                fields[1]['hasError'] = false;
+            }
+        } else if (e.target.id === 'confirm-password') {
+            if (e.target.value !== signupState['password']) {
+                fields[2]['hasError'] = true;
+            } else {
+                fields[2]['hasError'] = false;
+            }
+        }
     }
 
     const handleSubmit = (e) => {
@@ -44,12 +71,26 @@ const SignUp = () => {
 
         const email = signupState['email-address'];
         const password = signupState['password'];
-        
-        supabase.auth.signUp({ email, password }).then((res) => { 
-            console.log(res);
-        }).catch((error) => {
-            console.log(error);
+
+        let localError = false;
+        setErrorFound(false);
+        fields.forEach(field => {
+            if (field.hasError || signupState[field.id] === '') {
+                field.hasError = true;
+                localError = true;
+                setErrorFound(true);
+                return;
+            }
         });
+        
+        if (!localError) {
+            supabase.auth.signUp({ email, password }).then((res) => { 
+                setSubmitted(true);
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+       
     }
 
     return(
@@ -68,12 +109,23 @@ const SignUp = () => {
                             type={field.type}
                             isRequired={field.isRequired}
                             placeholder={field.placeholder}
+                            hasError={field.hasError}
+                            error={field.error}
                         />
                     
                     )
                 }
             </div>
-            <FormAction handleSubmit={handleSubmit} text="Sign Up"/>
+            <FormAction handleSubmit={handleSubmit} text="Sign Up" />
+            {
+                errorFound && <ToastAlert message="Please fill out all fields correctly" />
+            }
+            {
+                submitted && <ToastAlert message="Click on the link in an email you have received to complete your Signup" />
+            }
+            {
+                submitted && <ToastAlert message="If you don't see the email in your inbox, check your spam folder" />
+            }
         </form>
     )
 }

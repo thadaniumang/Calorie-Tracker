@@ -1,17 +1,14 @@
 // React and NextJS
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // Forms
 import { loginFields } from "../forms/authForms";
 
-// Recoil
-import { useRecoilState } from "recoil";
-import { loggedInState, userState } from "../atoms";
-
 // Components
 import Input from "./Input";
 import FormAction from "./FormAction";
+import ToastAlert from "./ToastAlert";
 
 // Supabase
 import supabase from "../supabase";
@@ -23,16 +20,22 @@ fields.forEach(field => fieldsState[field.id] = '');
 
 
 const Login = () => {
-    const [loggedIn, setLoggedIn] = useRecoilState(loggedInState);
-    const [user, setUser] = useRecoilState(userState);
-
     const [loginState, setLoginState] = useState(fieldsState);
+    const [loginError, setLoginError] = useState(false);
 
     const router = useRouter();
 
-    if (loggedIn && user) {
-        router.push('/');
-    }
+    useEffect(() => {
+        supabase.auth.getUser().then((res) => {
+            if (res.data.user) {
+                router.push('/');
+            } else {
+                return res.error;
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
 
     const handleChange = (e) => {
         setLoginState({...loginState, [e.target.id]: e.target.value})
@@ -44,19 +47,13 @@ const Login = () => {
         const email = loginState['email-address'];
         const password = loginState['password'];
         
-        supabase.auth.signInWithPassword({ email, password }).then((res) => { 
-            const session = res['data']['session'];
-            const userData = res['data']['user']
-
-            setLoggedIn(true);
-            setUser({
-                'access_token': session.access_token,
-                'refresh_token': session.refresh_token,
-                'user': userData
-            })
-
-            localStorage.setItem('loggedIn', loggedIn);
-            localStorage.setItem('user', JSON.stringify(user));
+        supabase.auth.signInWithPassword({ email, password }).then((res) => {
+            if (res.data.user == null) {
+                setLoginError(true);
+                return res.error;
+            } else {
+                router.push('/')
+            }
         }).catch((error) => {
             console.log(error);
         });
@@ -83,7 +80,10 @@ const Login = () => {
                     )
                 }
             </div>
-            <FormAction handleSubmit={handleSubmit} text="Login"/>
+            <FormAction handleSubmit={handleSubmit} text="Login" />
+            {
+                loginError && <ToastAlert message="Incorrect Credentials" />
+            }
         </form>
     )
 }

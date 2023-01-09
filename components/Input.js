@@ -10,7 +10,9 @@ export default function Input({
     type,
     isRequired=false,
     placeholder,
-    customClass
+    customClass,
+    hasError = false,
+    error = ''
 }){
     return(
         <div className="my-5">
@@ -26,7 +28,10 @@ export default function Input({
               required={isRequired}
               className={fixedInputClass+customClass}
               placeholder={placeholder}
-            />
-          </div>
+        />
+        {
+          hasError && <p className="text-red-500 text-xs italic">{error}</p>
+        }
+      </div>
     )
 }

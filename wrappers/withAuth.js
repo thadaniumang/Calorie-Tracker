@@ -20,8 +20,9 @@ function withAuth(WrappedComponent) {
             supabase.auth.getUser().then((res) => {
                 if (!res.data.user) {
                     router.push('/auth/login');
+                } else {
+                    setUserId(res.data.user.id);
                 }
-                setUserId(res.data.user.id);
             })
         }, []);
 

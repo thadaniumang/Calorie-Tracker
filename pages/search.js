@@ -1,48 +1,32 @@
 // React and NextJS
-import { useEffect, useState } from 'react'
-
-// Supabase Config
-import supabase from '../supabase';
+import { useState } from 'react'
 
 // Components
 import withAuth from '../wrappers/withAuth';
+import FoodSelect from '../components/FoodSelect';
+import AddToDiet from '../components/AddToDiet';
 
 // API
 import { axiosInstance, appId, appKey } from './api/foodapi';
 
+// Recoil
+import { useRecoilState } from 'recoil';
+import { selectedFoodData } from '../atoms';
 
-const Create = () => {
+
+const Search = () => {
     const [name, setName] = useState('');
     const [searchFoodItems, setSearchFoodItems] = useState(null);
     const [error, setError] = useState(null);
 
+    const [selectedFood, setSelectedFood] = useRecoilState(selectedFoodData);
+    const [foodChosen, setFoodChosen] = useState(false);
 
-    const [selectedFood, setSelectedFood] = useState(null);
-    const [selectedPortionUri, setSelectedPortionUri] = useState("");
-    const [quantity, setQuantity] = useState(1);
-
-    
-    const handleEat = () => {
-        if (quantity === null || quantity <= 0 || selectedPortionUri === "" || selectedFood === null) {
-            alert("Please select a food and quantity");
-            return;
-        }
-
-        const data = {
-            "ingredients": [
-                {
-                    "quantity": quantity,
-                    "measureURI": selectedPortionUri,
-                    "foodId": selectedFood.food.foodId
-                }
-            ]
-        }
-
-        console.log(data)
-    }
-
+    console.log(searchFoodItems)
 
     const handleSearch = async (e) => { 
+        setFoodChosen(false);
+        setSelectedFood(null);
         e.preventDefault();
 
         const data = {
@@ -83,43 +67,8 @@ const Create = () => {
                 <hr />
                 <div className="w-full">
                     <div className="p-4">
-                        <div className="text-xl font-medium mb-2 text-purple-600">Select Food Item</div>
-                        <div className="w-full my-8">
-                        {
-                                searchFoodItems && searchFoodItems.map((item, index) => (
-                                <>
-                                    <div key={index} className="border-b py-2">
-                                        <p className="px-2 py-3 relative hover:bg-gray-200 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedFood(item)} >
-                                            {item.food.label}
-                                        </p>
-                                    </div>
-                                    {
-                                        selectedFood === item &&
-                                        <div className="border rounded-lg border-purple-600 grid grid-cols-2">
-                                            {
-                                                    item.measures.length > 0 && item.measures.map((measure, index) => (
-                                                    <>
-                                                        <div key={index} className={`px-6 py-4 cursor-pointer" ${selectedPortionUri === measure.uri ? "bg-purple-600 text-white" : ""}`} onClick={() => setSelectedPortionUri(measure.uri)}>
-                                                            <p>{measure.label}</p>
-                                                            {
-                                                                selectedPortionUri === measure.uri &&
-                                                                <div className="flex flex-row mt-2">
-                                                                    <input className="border rounded-md py-1 px-2 w-2/3 text-black" type="number" value={quantity} onChange={e => setQuantity(e.target.value)} placeholder="Quantity"/>
-                                                                    <button className="w-1/3 px-4 py-2 rounded-md" onClick={handleEat}>
-                                                                        Add
-                                                                    </button>
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                    </>
-                                                ))
-                                            }
-                                        </div>
-                                    }
-                                </>
-                            ))
-                        }
-                        </div>
+                        {!foodChosen && <FoodSelect searchFoodItems={searchFoodItems} setFoodChosen={setFoodChosen} />}
+                        {foodChosen && <AddToDiet />}
                     </div>
                 </div>
             </div>
@@ -127,4 +76,4 @@ const Create = () => {
     )
 }
  
-export default withAuth(Create);
+export default withAuth(Search);

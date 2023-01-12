@@ -43,15 +43,15 @@ const AddToDiet = () => {
             return response.data;
         }).then((data) => {
             const nutrition = {
-                "calories": parseFloat(data.calories),
-                "totalWeight": parseFloat(data.totalWeight),
-                "fat": parseFloat(data.totalNutrients.FAT.quantity),
-                "carbs": parseFloat(data.totalNutrients.CHOCDF.quantity),
-                "protein": parseFloat(data.totalNutrients.PROCNT.quantity),
-                "fiber": parseFloat(data.totalNutrients.FIBTG.quantity),
+                "calories": parseFloat(data.calories).toFixed(2),
+                "totalWeight": parseFloat(data.totalWeight).toFixed(2),
+                "fat": parseFloat(data.totalNutrients.FAT.quantity).toFixed(2),
+                "carbs": parseFloat(data.totalNutrients.CHOCDF.quantity).toFixed(2),
+                "protein": parseFloat(data.totalNutrients.PROCNT.quantity).toFixed(2),
+                "fiber": parseFloat(data.totalNutrients.FIBTG.quantity).toFixed(2),
                 "name": data.ingredients[0].parsed[0].food,
                 "measure": data.ingredients[0].parsed[0].measure,
-                "quantity": parseFloat(data.ingredients[0].parsed[0].quantity)
+                "quantity": parseFloat(data.ingredients[0].parsed[0].quantity).toFixed(2)
             }
 
             setNutritionalInfo(nutrition);

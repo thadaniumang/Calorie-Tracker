@@ -44,7 +44,7 @@ const FoodSelect = ({ searchFoodItems, setFoodChosen }) => {
                                     {item.food.label}
                                 </p>
                                 <div className="col-span-2 md:col-span-1">
-                                    {item.food.image && <Image src={item.food.image} width={100} height={100} alt={item.food.knownAs} className="rounded-full" />}
+                                    {item.food.image && <Image src={item.food.image} width={100} height={100} alt={item.food.knownAs} className="rounded-full ml-auto" />}
                                 </div>
                             </div>
                             {

@@ -1,5 +1,6 @@
 // React and NextJS
 import { useState } from 'react'
+import Link from 'next/link'
 
 // Components
 import withAuth from '../wrappers/withAuth';
@@ -49,6 +50,11 @@ const Search = () => {
 
     return (
         <>
+            {/* Back to Home Link */}
+            <div className="flex justify-center">
+                <Link href="/" className="text-purple-600 font-semibold">Back to Home</Link>
+            </div>
+
             <div className="pt-2 mx-auto text-gray-600 relative">
                 <input
                     className="w-full border-2 border-gray-300 bg-white py-2 px-5 pr-16 rounded-lg text-sm focus:outline-none"

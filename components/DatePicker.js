@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const DatePicker = ({date, handleDateChange, setToday}) => {
 
   return (
-    <div className='w-full flex justify-items-start gap-x-4 mt-4'>
+    <div className='flex justify-items-start gap-x-4 mt-4'>
       <input className="form-input rounded-md shadow-sm py-1 px-3 text-gray-700 border-2 border-purple-600" type="date" value={date} onChange={handleDateChange} />
       <button className="bg-purple-600 text-white rounded-md py-1 px-5" onClick={setToday}>Today</button>
     </div>

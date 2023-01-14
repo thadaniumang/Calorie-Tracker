@@ -9,6 +9,7 @@ import { selectedFoodData, userState } from '../atoms';
 // Components
 import Nutrition from './Nutrition';
 import DatePicker from './DatePicker';
+import Error from './Error';
 
 // Axios
 import { axiosInstance, appId, appKey } from '../pages/api/foodapi';
@@ -83,12 +84,14 @@ const AddToDiet = ({ loading, setLoading }) => {
         try {
             await supabase.from('Diet').insert([data]);
             router.push('/');
-        } catch (error) {
-            return error;
+        } catch (err) {
+            return err;
         }
     }
 
-    if (!loading) {
+    if (error) {
+        return <Error message="Error while loading nutrients" />
+    } else if (!loading) {
         return (
             <>
                 <div className="text-xl font-medium mb-2 text-purple-600">Food Item Chosen</div>

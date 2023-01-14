@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Head from 'next/head'
 
 // Components
 import Navbar from '../components/Navbar';
@@ -23,6 +24,9 @@ const Home = () => {
 
   return (
     <div className="">
+      <Head>
+        <title>Dietto - Home</title>
+      </Head>
       {/* Navbar */}
       <Navbar />
       {/* Today's Diet */}

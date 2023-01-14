@@ -12,6 +12,7 @@ import supabase from "../supabase";
 import FormAction from "./FormAction";
 import Input from "./Input";
 import ToastAlert from "./ToastAlert";
+import Error from "./Error";
 
 // Form Fields
 const fields = signupFields;
@@ -40,6 +41,7 @@ const SignUp = () => {
             }
         }).catch((error) => {
             setError(error);
+            console.log(error);
         });
     }, []);
 
@@ -98,6 +100,7 @@ const SignUp = () => {
 
     return(
         <form className="mt-8 space-y-6">
+            { signUpError && <Error message="Error Signing Up" /> }
             <div>
                 {
                     fields.map(field =>

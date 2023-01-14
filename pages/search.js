@@ -1,12 +1,14 @@
 // React and NextJS
 import { useState } from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 
 // Components
 import withAuth from '../wrappers/withAuth';
 import FoodSelect from '../components/FoodSelect';
 import AddToDiet from '../components/AddToDiet';
 import { RingLoader } from 'react-spinners';
+import Error from '../components/Error';
 
 // API
 import { axiosInstance, appId, appKey } from './api/foodapi';
@@ -53,6 +55,9 @@ const Search = () => {
 
     return (
         <>
+            <Head>
+                <title>Dietto - Add Item</title>
+            </Head>
             {/* Back to Home Link */}
             <div className="flex justify-center">
                 <Link href="/" className="text-purple-600 font-semibold">Back to Home</Link>
@@ -81,6 +86,10 @@ const Search = () => {
                             <div className="flex justify-center my-5">
                                 <RingLoader color="rgb(147 51 234)" loading={loading} size={150} aria-label="Loading Spinner" data-testid="loader" />
                             </div>
+                        }
+                        {
+                            (error || (searchFoodItems && searchFoodItems.length == 0)) &&
+                            <Error message="Coudn't find what you are looking for" />
                         }
                         {!loading && !foodChosen && <FoodSelect searchFoodItems={searchFoodItems} setFoodChosen={setFoodChosen} setLoading={setLoading} />}
                         {foodChosen && <AddToDiet loading={loading} setLoading={setLoading} />}

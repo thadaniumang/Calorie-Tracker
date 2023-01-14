@@ -9,6 +9,7 @@ import { loginFields } from "../forms/authForms";
 import Input from "./Input";
 import FormAction from "./FormAction";
 import ToastAlert from "./ToastAlert";
+import Error from "./Error";
 
 // Supabase
 import supabase from "../supabase";
@@ -35,6 +36,7 @@ const Login = () => {
             }
         }).catch((error) => {
             setError(error);
+            console.log(error);
         });
     }, []);
 
@@ -60,7 +62,7 @@ const Login = () => {
         });
     }
 
-    return(
+    return (
         <form className="mt-8 space-y-6">
             <div className="-space-y-px">
                 {

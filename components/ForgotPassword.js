@@ -7,6 +7,7 @@ import { forgotFields } from '../forms/authForms';
 // Components
 import Input from './Input';
 import FormAction from './FormAction';
+import Error from './Error';
 
 // Supabase
 import supabase from "../supabase";
@@ -41,6 +42,7 @@ const ForgotPassword = () => {
 
     return (
         <form className="mt-8 space-y-6">
+            {error && <Error message="Error sending E-Mail. Make sure it is correct and registered" />}
             <div className="-space-y-px">
                 {
                     fields.map(field =>

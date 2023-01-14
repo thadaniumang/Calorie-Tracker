@@ -14,7 +14,7 @@ import DatePicker from './DatePicker';
 import { axiosInstance, appId, appKey } from '../pages/api/foodapi';
 import supabase from '../supabase';
 
-const AddToDiet = () => {
+const AddToDiet = ({ loading, setLoading }) => {
 
     const router = useRouter();
 
@@ -56,9 +56,10 @@ const AddToDiet = () => {
 
             setNutritionalInfo(nutrition);
         }).catch((error) => {
-            console.log(error)
             setError(error)
-        });
+        }).finally(() => {
+            setLoading(false);
+        })
     }, [])
 
     const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
@@ -83,21 +84,23 @@ const AddToDiet = () => {
             await supabase.from('Diet').insert([data]);
             router.push('/');
         } catch (error) {
-            console.log(error);
             return error;
         }
     }
 
-    return (
-        <>
-            <div className="text-xl font-medium mb-2 text-purple-600">Food Item Chosen</div>
-            <div className="w-full my-4">
-                <Nutrition food={nutritionalInfo} />
-                <DatePicker date={date} handleDateChange={handleDateChange} setToday={setToday} />
-            </div>
-            <button className="mt-3 hover:bg-purple-600 text-purple-600 border border-purple-600 hover:text-white py-1 px-4 rounded-lg" onClick={handleSubmit}>Submit</button>
-        </>
-    );
+    if (!loading) {
+        return (
+            <>
+                <div className="text-xl font-medium mb-2 text-purple-600">Food Item Chosen</div>
+                <div className="w-full my-4">
+                    <Nutrition food={nutritionalInfo} />
+                    <DatePicker date={date} handleDateChange={handleDateChange} setToday={setToday} />
+                </div>
+                <button className="mt-3 hover:bg-purple-600 text-purple-600 border border-purple-600 hover:text-white py-1 px-4 rounded-lg" onClick={handleSubmit}>Submit</button>
+            </>
+        );
+    }
+    
 }
  
 export default AddToDiet;

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { selectedFoodData } from '../atoms';
 
-const FoodSelect = ({ searchFoodItems, setFoodChosen }) => {
+const FoodSelect = ({ searchFoodItems, setFoodChosen, setLoading }) => {
     
     const [selectedFood, setSelectedFood] = useState(null);
     const [selectedPortionUri, setSelectedPortionUri] = useState("");
@@ -31,6 +31,7 @@ const FoodSelect = ({ searchFoodItems, setFoodChosen }) => {
 
         setSelectedFoodRecoilState(data);
         setFoodChosen(true);
+        setLoading(true);
     }
 
     return (
@@ -51,9 +52,9 @@ const FoodSelect = ({ searchFoodItems, setFoodChosen }) => {
                                 selectedFood === item &&
                                 <div className="border rounded-lg border-purple-600 grid grid-cols-2">
                                     {
-                                            item.measures.length > 0 && item.measures.map((measure, index) => (
+                                        item.measures.length > 0 && item.measures.map((measure, index) => (
                                             <>
-                                                <div key={index} className={`px-6 py-4 " ${selectedPortionUri === measure.uri ? " bg-purple-600 text-white" : ""}`} onClick={() => setSelectedPortionUri(measure.uri)}>
+                                                <div key={index} className={`px-6 py-4 border rounded-md border-gray-200 " ${selectedPortionUri === measure.uri ? " bg-purple-600 text-white" : ""}`} onClick={() => setSelectedPortionUri(measure.uri)}>
                                                     <p className='cursor-pointer'>{measure.label}</p>
                                                     {
                                                         selectedPortionUri === measure.uri &&

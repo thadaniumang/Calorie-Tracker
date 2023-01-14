@@ -22,6 +22,7 @@ fields.forEach(field => fieldsState[field.id] = '');
 const Login = () => {
     const [loginState, setLoginState] = useState(fieldsState);
     const [loginError, setLoginError] = useState(false);
+    const [error, setError] = useState(null);
 
     const router = useRouter();
 
@@ -33,7 +34,7 @@ const Login = () => {
                 return res.error;
             }
         }).catch((error) => {
-            console.log(error);
+            setError(error);
         });
     }, []);
 
@@ -55,7 +56,7 @@ const Login = () => {
                 router.push('/')
             }
         }).catch((error) => {
-            console.log(error);
+            setLoginError(error);
         });
     }
 

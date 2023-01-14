@@ -23,6 +23,9 @@ const SignUp = () => {
     const [submitted, setSubmitted] = useState(false);
     const [errorFound, setErrorFound] = useState(false);
 
+    const [error, setError] = useState(null);
+    const [signUpError, setSignUpError] = useState(null);
+
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
@@ -36,7 +39,7 @@ const SignUp = () => {
                 return res.error;
             }
         }).catch((error) => {
-            console.log(error);
+            setError(error);
         });
     }, []);
 
@@ -87,7 +90,7 @@ const SignUp = () => {
             supabase.auth.signUp({ email, password }).then((res) => { 
                 setSubmitted(true);
             }).catch((error) => {
-                console.log(error);
+                setSignUpError(error);
             });
         }
        

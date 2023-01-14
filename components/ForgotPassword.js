@@ -21,6 +21,7 @@ fields.forEach(field => fieldsState[field.id] = '');
 const ForgotPassword = () => {
     const [forgotState, setForgotState] = useState(fieldsState);
     const [emailSent, setEmailSent] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         setForgotState({ ...forgotState, [e.target.id]: e.target.value })
@@ -32,10 +33,9 @@ const ForgotPassword = () => {
         const email = forgotState['email-address'];
         
         supabase.auth.resetPasswordForEmail(email).then((data) => {
-            console.log(data);
             setEmailSent(true);
         }).catch((error) => {
-            console.log(error);
+            setError(error);
         });
     }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import Card from './NutrientCard';
+import { RingLoader } from 'react-spinners';
 
 import supabase from '../supabase';
 
@@ -9,7 +10,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../atoms';
 
 
-const Day = ({ date }) => {
+const Day = ({ date, loading, setLoading }) => {
 
     const [nutrients, setNutrients] = useState([
         {
@@ -54,6 +55,7 @@ const Day = ({ date }) => {
                 return res.data;
             }
         }).then((data) => {
+            setLoading(true);
             let calories = 0;
             let protein = 0;
             let carbs = 0;
@@ -101,19 +103,28 @@ const Day = ({ date }) => {
                 }
             ]);
         }).catch((err) => {
-            console.log(err);
-        })
+            setError(err);
+        }).finally(() => {
+            setLoading(false);
+        });
 
     }, [date, userId]);
 
-
-    return (
-        <div className="my-4 grid md:grid-cols-2 gap-4">
-            {nutrients.map((nutrient) => (
-                <Card key={nutrient.name} name={nutrient.name} intake={nutrient.intake} unit={nutrient.unit} image={nutrient.image} />
-            ))}
+    if (loading) {
+        <div className="flex justify-center my-5">
+            <RingLoader color="rgb(147 51 234)" loading={loading} size={150} aria-label="Loading Spinner" data-testid="loader" />
         </div>
-    );
+    } else {
+        return (
+            <div className="my-4 grid md:grid-cols-2 gap-4">
+                {nutrients.map((nutrient) => (
+                    <Card key={nutrient.name} name={nutrient.name} intake={nutrient.intake} unit={nutrient.unit} image={nutrient.image} />
+                ))}
+            </div>
+        );
+    }
+
+    
 }
  
 export default Day;

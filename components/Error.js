@@ -1,3 +1,14 @@
+// Static Props
+export async function getStaticProps({params}) {
+    return {
+        props: {
+            message: params.message,
+        }
+    }
+}
+
+
+// Component
 const Error = ({ message = null }) => {
     return (
         <div className="flex flex-col items-center text-center mt-6 mb-4">

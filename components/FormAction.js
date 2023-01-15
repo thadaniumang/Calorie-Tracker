@@ -1,4 +1,18 @@
-const FormAction = ({ handleSubmit, type="Button", action="submit", text }) => {
+// Static Props
+export async function getStaticProps({params}) {
+    return {
+        props: {
+            handleSubmit: params.handleSubmit,
+            type: params.type,
+            action: params.action,
+            text: params.text,
+        }
+    }
+}
+
+
+// Component
+const FormAction = ({ handleSubmit, type = "Button", action = "submit", text }) => {
     return(
         <>
             {

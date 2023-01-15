@@ -1,5 +1,21 @@
+// NextJS
 import Image from 'next/image';
 
+
+// Static Props
+export async function getStaticProps({ params }) {
+    return {
+        props: {
+            name: params.name,
+            intake: params.intake,
+            unit: params.unit,
+            image: params.image,
+        }
+    }
+}
+
+
+// Component
 const Card = ({ name, intake, unit, image }) => {
     return (
         <>

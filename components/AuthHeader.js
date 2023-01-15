@@ -1,5 +1,19 @@
+// NextJS
 import Link from "next/link";
 
+// Static Props
+export async function getStaticProps({params}) {
+  return {
+    props: {
+        heading: params.heading,
+        paragraph: params.paragraph,
+        linkName: params.linkName,
+        linkUrl: params.linkUrl,    
+    }
+  }
+}
+
+// Component
 const AuthHeader = ({ heading, paragraph, linkName, linkUrl = "#" }) => {
     return(
         <div className="mb-10">

@@ -29,10 +29,10 @@ const Search = () => {
     const [foodChosen, setFoodChosen] = useState(false);
 
     const handleSearch = async (e) => {
+        e.preventDefault();
         setLoading(true);
         setFoodChosen(false);
         setSelectedFood(null);
-        e.preventDefault();
 
         const data = {
             "ingr": name,

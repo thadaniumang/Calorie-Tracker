@@ -19,6 +19,7 @@ let fieldsState = {};
 fields.forEach(field => fieldsState[field.id] = '');
 
 
+// Component
 const ForgotPassword = () => {
     const [forgotState, setForgotState] = useState(fieldsState);
     const [emailSent, setEmailSent] = useState(false);

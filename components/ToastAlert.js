@@ -1,4 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+
+export async function getStaticProps({params}) {
+  return {
+    props: {
+      message: params.message
+    }
+  }
+}
 
 const ToastAlert = ({message}) => {
   const [showToast, setShowToast] = useState(false);
@@ -6,9 +14,9 @@ const ToastAlert = ({message}) => {
   useEffect(() => {
     if (message) {
       setShowToast(true);
-    //   setTimeout(() => {
-    //     setShowToast(false);
-    //   }, 50000);
+      setTimeout(() => {
+        setShowToast(false);
+      }, 50000);
     }
   }, [message]);
 

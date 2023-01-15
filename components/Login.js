@@ -20,6 +20,7 @@ let fieldsState = {};
 fields.forEach(field => fieldsState[field.id] = '');
 
 
+// Component
 const Login = () => {
     const [loginState, setLoginState] = useState(fieldsState);
     const [loginError, setLoginError] = useState(false);

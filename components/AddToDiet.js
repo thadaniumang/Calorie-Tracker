@@ -15,6 +15,19 @@ import Error from './Error';
 import { axiosInstance, appId, appKey } from '../pages/api/foodapi';
 import supabase from '../supabase';
 
+
+// Static Props
+export async function getStaticProps({params}) {
+  return {
+    props: {
+      loading: params.loading,
+      setLoading: params.setLoading,
+    }
+  }
+}
+
+
+// Component
 const AddToDiet = ({ loading, setLoading }) => {
 
     const router = useRouter();

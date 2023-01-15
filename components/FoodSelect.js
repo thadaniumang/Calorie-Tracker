@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+// ReactJS and NextJS
+import { useState } from 'react';
 import Image from 'next/image';
 
 // Recoil
 import { useRecoilState } from 'recoil';
 import { selectedFoodData } from '../atoms';
 
+
+// Static Props
+export async function getStaticProps({params}) {
+    return {
+        props: {
+            searchFoodItems: params.searchFoodItems,
+            setFoodChosen: params.setFoodChosen,
+            setLoading: params.setLoading,
+        }
+    }
+}
+
+
+// Component
 const FoodSelect = ({ searchFoodItems, setFoodChosen, setLoading }) => {
     
     const [selectedFood, setSelectedFood] = useState(null);

@@ -12,7 +12,7 @@ import { userState } from '../atoms';
 
 function withAuth(WrappedComponent) {
 
-    return function AuthWrapper(props) {
+    function AuthWrapper(props) {
         const router = useRouter();
         const [userId, setUserId] = useRecoilState(userState);
 
@@ -28,6 +28,13 @@ function withAuth(WrappedComponent) {
 
         return <WrappedComponent {...props} />;
     }
+
+    AuthWrapper.getInitialProps = async (context) => {
+        const props = WrappedComponent.getInitialProps && await WrappedComponent.getInitialProps(context);
+        return { ...props }
+    }
+
+    return AuthWrapper;
 }
 
 export default withAuth;

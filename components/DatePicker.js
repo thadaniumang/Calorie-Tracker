@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
+// Static Props
+export async function getStaticProps({params}) {
+  return {
+    props: {
+      date: params.date,
+      handleDateChange: params.handleDateChange,
+      setToday: params.setToday,
+    }
+  }
+}
 
-const DatePicker = ({date, handleDateChange, setToday}) => {
+
+// Component
+const DatePicker = ({ date, handleDateChange, setToday }) => {
 
   return (
     <div className='flex justify-items-start gap-x-4 mt-4'>

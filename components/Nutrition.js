@@ -1,5 +1,14 @@
-import React from 'react';
+// Static Props
+export async function getStaticProps({ params }) {
+    return {
+        props: {
+            food: params.food,
+        }
+    }
+}
 
+
+// Component
 const Nutrition = ({ food }) => {
     return (
         <div className="bg-white rounded-lg shadow-md p-6 text-purple-600 border border-purple-600">

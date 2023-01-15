@@ -20,6 +20,7 @@ let fieldsState = {};
 fields.forEach(field => fieldsState[field.id] = '');
 
 
+// Component
 const SignUp = () => {
     const [submitted, setSubmitted] = useState(false);
     const [errorFound, setErrorFound] = useState(false);

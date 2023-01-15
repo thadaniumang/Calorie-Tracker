@@ -6,6 +6,7 @@ import Link from "next/link";
 import supabase from "../supabase"
 
 
+// Component
 export default function Navbar() {
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();

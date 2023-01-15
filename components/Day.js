@@ -1,8 +1,11 @@
+// ReactJS
 import { useState, useEffect } from 'react';
 
+// Components
 import Card from './NutrientCard';
 import { RingLoader } from 'react-spinners';
 
+// Supabase
 import supabase from '../supabase';
 
 // RecoilJS
@@ -10,6 +13,19 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../atoms';
 
 
+// Static Props
+export async function getStaticProps({params}) {
+    return {
+        props: {
+            date: params.date,
+            loading: params.loading,
+            setLoading: params.setLoading,
+        }
+    }
+}
+
+
+// Component
 const Day = ({ date, loading, setLoading }) => {
 
     const [nutrients, setNutrients] = useState([
@@ -117,8 +133,8 @@ const Day = ({ date, loading, setLoading }) => {
     } else {
         return (
             <div className="my-4 grid md:grid-cols-2 gap-4">
-                {nutrients.map((nutrient) => (
-                    <Card key={nutrient.name} name={nutrient.name} intake={nutrient.intake} unit={nutrient.unit} image={nutrient.image} />
+                {nutrients.map((nutrient, index) => (
+                    <Card key={index} name={nutrient.name} intake={nutrient.intake} unit={nutrient.unit} image={nutrient.image} />
                 ))}
             </div>
         );

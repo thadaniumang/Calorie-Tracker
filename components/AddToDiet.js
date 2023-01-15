@@ -39,6 +39,7 @@ const AddToDiet = ({ loading, setLoading }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        setError(null);
         axiosInstance.post('nutrients', { 
                 "ingredients": [
                     {
@@ -69,7 +70,6 @@ const AddToDiet = ({ loading, setLoading }) => {
             }
 
             setNutritionalInfo(nutrition);
-            setError(null);
         }).catch((error) => {
             setError(error)
         }).finally(() => {

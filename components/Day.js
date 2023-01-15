@@ -64,6 +64,7 @@ const Day = ({ date, loading, setLoading }) => {
     const [userId, setUserId] = useRecoilState(userState);
 
     useEffect(() => {
+        setError(null);
         supabase.from('Diet').select('*').eq('user', userId).eq('date', date).then((res) => {
             if (res.error) {
                 setError(res.error);
@@ -118,7 +119,6 @@ const Day = ({ date, loading, setLoading }) => {
                     image: "/fiber.png"
                 }
             ]);
-            setError(null);
         }).catch((err) => {
             setError(err);
         }).finally(() => {

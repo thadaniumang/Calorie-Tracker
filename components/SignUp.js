@@ -34,11 +34,11 @@ const SignUp = () => {
     const router = useRouter();
 
     useEffect(() => {
+        setError(null);
         supabase.auth.getUser().then((res) => {
             if (res.data.user) {
                 router.push('/');
             } else {
-                setError(null);
                 return res.error;
             }
         }).catch((error) => {

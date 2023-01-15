@@ -30,6 +30,7 @@ const Search = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
+        setError(null);
         setLoading(true);
         setFoodChosen(false);
         setSelectedFood(null);
@@ -46,8 +47,8 @@ const Search = () => {
             return response.data.hints;
         }).then((foodItems) => {
             setSearchFoodItems(foodItems);
-            setError(null);
         }).catch((error) => {
+            setSearchFoodItems(null);
             setError(error)
         }).finally(() => {
             setLoading(false);

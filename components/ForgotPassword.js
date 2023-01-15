@@ -31,12 +31,12 @@ const ForgotPassword = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setError(null);
 
         const email = forgotState['email-address'];
         
         supabase.auth.resetPasswordForEmail(email).then((data) => {
             setEmailSent(true);
-            setError(null);
         }).catch((error) => {
             setError(error);
         });

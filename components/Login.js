@@ -33,6 +33,7 @@ const Login = () => {
             if (res.data.user) {
                 router.push('/');
             } else {
+                setError(null);
                 return res.error;
             }
         }).catch((error) => {

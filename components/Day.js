@@ -118,6 +118,7 @@ const Day = ({ date, loading, setLoading }) => {
                     image: "/fiber.png"
                 }
             ]);
+            setError(null);
         }).catch((err) => {
             setError(err);
         }).finally(() => {

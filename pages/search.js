@@ -46,6 +46,7 @@ const Search = () => {
             return response.data.hints;
         }).then((foodItems) => {
             setSearchFoodItems(foodItems);
+            setError(null);
         }).catch((error) => {
             setError(error)
         }).finally(() => {

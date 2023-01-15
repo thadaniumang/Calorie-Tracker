@@ -36,6 +36,7 @@ const ForgotPassword = () => {
         
         supabase.auth.resetPasswordForEmail(email).then((data) => {
             setEmailSent(true);
+            setError(null);
         }).catch((error) => {
             setError(error);
         });

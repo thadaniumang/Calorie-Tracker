@@ -69,6 +69,7 @@ const AddToDiet = ({ loading, setLoading }) => {
             }
 
             setNutritionalInfo(nutrition);
+            setError(null);
         }).catch((error) => {
             setError(error)
         }).finally(() => {

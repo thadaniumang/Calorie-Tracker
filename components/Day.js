@@ -121,6 +121,7 @@ const Day = ({ date, loading, setLoading }) => {
                     image: "/fiber.png",
                 }
             ]);
+            setError(null);
         }).catch((err) => {
             setError(err);
         }).finally(() => {
@@ -135,6 +136,7 @@ const Day = ({ date, loading, setLoading }) => {
                 setError(res.error);
             } else {
                 return res.data;
+                setError(null);
             }
         }).then((data) => {
             if (!(data === undefined || data === null || data === "" || data === [] || data === {} || data === 0 || data === false)) {
@@ -213,6 +215,7 @@ const Day = ({ date, loading, setLoading }) => {
                     })
                 })
             }
+            setError(null);
         }).catch((err) => {
             setError(err);
         }).finally(() => {

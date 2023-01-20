@@ -1,6 +1,8 @@
 // ReactJS and NextJS
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Head from 'next/head';
 
 // Components
 import withAuth from '../wrappers/withAuth';
@@ -73,6 +75,13 @@ const Goals = () => {
     } else {
         return (
             <>
+                <Head>
+                    <title>Dietto - Goals</title>
+                </Head>
+                <div className="flex justify-center">
+                    <Link href="/" className="text-purple-600 font-semibold">Back to Home</Link>
+                </div>
+                <hr className="my-4"/>
                 <h2 className="text-lg font-medium mb-4 text-purple-600 text-center">Set Your Goals</h2>
                 <form className="bg-white p-6 rounded-lg grid sm:grid-cols-2 gap-x-4 gap-y-3">
                     <label className="block mb-2 font-medium text-gray-700 col-span-1">

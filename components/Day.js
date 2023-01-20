@@ -92,50 +92,143 @@ const Day = ({ date, loading, setLoading }) => {
                     name: "Calories",
                     intake: calories,
                     unit: "kcal",
-                    image: "/calories.png"
+                    image: "/calories.png",
                 },
                 {
                     name: "Protein",
                     intake: protein.toFixed(2),
                     unit: "g",
-                    image: "/protein.png"
+                    image: "/protein.png",
                 },
                 {
                     name: "Carbohydrates",
                     intake: carbs.toFixed(2),
                     unit: "g",
-                    image: "/carbs.png"
+                    image: "/carbs.png",
                 },
                 {
                     name: "Fat",
                     intake: fats.toFixed(2),
                     unit: "g",
-                    image: "/fats.png"
+                    image: "/fats.png",
                 },
                 {
                     name: "Fiber",
                     intake: fiber.toFixed(2),
                     unit: "g",
-                    image: "/fiber.png"
+                    image: "/fiber.png",
                 }
             ]);
         }).catch((err) => {
             setError(err);
         }).finally(() => {
             setLoading(false);
-        });
+        })
 
     }, [date, userId]);
 
+    useEffect(() => {
+        supabase.from('Goals').select('calorie, carbs, fats, fiber, protein').eq('user', userId).limit(1).single().then((res) => {
+            if (res.error) {
+                setError(res.error);
+            } else {
+                return res.data;
+            }
+        }).then((data) => {
+            if (!(data === undefined || data === null || data === "" || data === [] || data === {} || data === 0 || data === false)) {
+                setNutrients((prev) => {
+                    return prev.map((item) => {
+                        switch (item.name) {
+                            case "Calories":
+                                return {
+                                    ...item,
+                                    goal: data.calorie
+                                }
+                            case "Protein":
+                                return {
+                                    ...item,
+                                    goal: data.protein
+                                }
+                            case "Carbohydrates":
+                                return {
+                                    ...item,
+                                    goal: data.carbs
+                                }
+                            case "Fat":
+                                return {
+                                    ...item,
+                                    goal: data.fats
+                                }
+                            case "Fiber":
+                                return {
+                                    ...item,
+                                    goal: data.fiber
+                                }
+                            default:
+                                return item;
+                        }
+                    })
+                })
+            } else if (userId) {
+                supabase.from('Goals').insert([{ 'user': userId }]).then((res) => {
+                    if (res.error) {
+                        setError(res.error);
+                    } else {
+                        return res.data;
+                    }
+                })
+                setNutrients((prev) => {
+                    return prev.map((item) => {
+                        switch (item.name) {
+                            case "Calories":
+                                return {
+                                    ...item,
+                                    goal: 1600
+                                }
+                            case "Protein":
+                                return {
+                                    ...item,
+                                    goal: 65
+                                }
+                            case "Carbohydrates":
+                                return {
+                                    ...item,
+                                    goal: 200
+                                }
+                            case "Fat":
+                                return {
+                                    ...item,
+                                    goal: 50
+                                }
+                            case "Fiber":
+                                return {
+                                    ...item,
+                                    goal: 25
+                                }
+                            default:
+                                return item;
+                        }
+                    })
+                })
+            }
+        }).catch((err) => {
+            setError(err);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }, [nutrients]);
+
     if (loading) {
-        <div className="flex justify-center my-5">
-            <RingLoader color="rgb(147 51 234)" loading={loading} size={150} aria-label="Loading Spinner" data-testid="loader" />
-        </div>
+        return (
+            <div className="flex justify-center my-5">
+                <RingLoader color="rgb(147 51 234)" loading={loading} size={150} aria-label="Loading Spinner" data-testid="loader" />
+            </div>
+        );
     } else {
         return (
-            <div className="my-4 grid md:grid-cols-2 gap-4">
+            <div className="mt-8 mb-4 grid lg:grid-cols-2 gap-4">
                 {nutrients.map((nutrient, index) => (
-                    <Card key={index} name={nutrient.name} intake={nutrient.intake} unit={nutrient.unit} image={nutrient.image} />
+                    <Card key={index} name={nutrient.name} intake={nutrient.intake} goal={nutrient.goal} unit={nutrient.unit} image={nutrient.image} />
                 ))}
             </div>
         );

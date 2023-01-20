@@ -1,9 +1,11 @@
-// ReactJS
+// ReactJS and NextJS
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 // Components
 import Card from './NutrientCard';
 import { RingLoader } from 'react-spinners';
+import Error from './Error';
 
 // Supabase
 import supabase from '../supabase';
@@ -218,7 +220,9 @@ const Day = ({ date, loading, setLoading }) => {
         });
     }, [nutrients]);
 
-    if (loading) {
+    if (error) { 
+        return <Error />
+    } else if (loading) {
         return (
             <div className="flex justify-center my-5">
                 <RingLoader color="rgb(147 51 234)" loading={loading} size={150} aria-label="Loading Spinner" data-testid="loader" />
@@ -230,6 +234,9 @@ const Day = ({ date, loading, setLoading }) => {
                 {nutrients.map((nutrient, index) => (
                     <Card key={index} name={nutrient.name} intake={nutrient.intake} goal={nutrient.goal} unit={nutrient.unit} image={nutrient.image} />
                 ))}
+                <Link href={`/diet?date=${date}`} className="bg-purple-600 flex justify-center items-center text-white rounded-lg hover:border border-purple-600 hover:text-purple-600 hover:bg-white py-6 px-4 lg:p-0">
+                    Food Log
+                </Link>
             </div>
         );
     }

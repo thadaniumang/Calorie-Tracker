@@ -10,12 +10,17 @@ export async function getStaticProps({ params }) {
 
 // Component
 const Nutrition = ({ food }) => {
+
+    const capitalizeFirstLetter = (string) => {
+        return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+
     return (
         <div className="bg-white rounded-lg shadow-md p-6 text-purple-600 border border-purple-600">
-            <h2 className="text-2xl font-bold">{food.name}</h2>
+            <h2 className="text-2xl font-bold">{capitalizeFirstLetter(food.name)}</h2>
             <div className="my-4">
                 <p className='text-gray-700'>Quantity: <span className='font-semibold'>{food.quantity}</span></p>
-                <p className='text-gray-700'>Measure: <span className='font-semibold'>{food.measure}</span></p>
+                <p className='text-gray-700'>Measure: <span className='font-semibold'>{capitalizeFirstLetter(food.measure)}</span></p>
             </div>
             <hr />
             <div className="mt-4 grid grid-cols-2">

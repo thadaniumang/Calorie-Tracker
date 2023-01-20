@@ -75,7 +75,7 @@ const Goals = () => {
             <>
                 <h2 className="text-lg font-medium mb-4 text-purple-600 text-center">Set Your Goals</h2>
                 <form className="bg-white p-6 rounded-lg grid sm:grid-cols-2 gap-x-4 gap-y-3">
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 col-span-1">
                         Calorie:
                         <input
                             className="border border-purple-600 p-2 rounded-lg w-full mt-2 text-gray-600 font-normal"
@@ -85,7 +85,7 @@ const Goals = () => {
                             onChange={handleChange}
                         />
                     </label>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 col-span-1">
                         Carbohydrates:
                         <input
                             className="border border-purple-600 p-2 rounded-lg w-full mt-2 text-gray-600 font-normal"
@@ -95,7 +95,7 @@ const Goals = () => {
                             onChange={handleChange}
                         />
                     </label>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 col-span-1">
                         Protein:
                         <input
                             className="border border-purple-600 p-2 rounded-lg w-full mt-2 text-gray-600 font-normal"
@@ -105,7 +105,7 @@ const Goals = () => {
                             onChange={handleChange}
                         />
                     </label>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 col-span-1">
                         Fats:
                         <input
                             className="border border-purple-600 p-2 rounded-lg w-full mt-2 text-gray-600 font-normal"
@@ -115,7 +115,7 @@ const Goals = () => {
                             onChange={handleChange}
                         />
                     </label>
-                    <label className="block mb-2 font-medium text-gray-700">
+                    <label className="block mb-2 font-medium text-gray-700 col-span-1">
                         Fiber:
                         <input
                             className="border border-purple-600 p-2 rounded-lg w-full mt-2 text-gray-600 font-normal"
